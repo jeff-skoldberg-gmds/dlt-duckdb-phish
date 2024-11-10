@@ -1,0 +1,16 @@
+[runtime]
+log_level = "INFO"
+dlthub_telemetry = false
+
+[source.phish_pipeline]
+base_url = "https://api.phish.net/v5/"
+resources = [
+    { name = "shows", endpoint = "shows.json" },
+    { name = "setlists", endpoint = "setlists.json" },
+    { name = "songs", endpoint = "songs.json" },
+    { name = "venues", endpoint = "venues.json" },
+    { name = "users", endpoint = "users/uid/0.json" }
+]
+
+[source.phish_pipeline.resource_defaults.endpoint.params]
+limit = 0
