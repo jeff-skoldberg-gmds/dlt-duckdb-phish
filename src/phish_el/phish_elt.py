@@ -1,6 +1,11 @@
 import dlt
 from dlt.sources.rest_api import rest_api_source, check_connection
+import os
 
+# change cwd to "this dir", one level up
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+# @dlt.source(name="phish_dot_net")
 def load_phish_data() -> None:
     # Get configuration from config.toml
     config = dlt.config['source.phish_pipeline']
@@ -26,6 +31,8 @@ def load_phish_data() -> None:
         }
     }
 
+    
+    
     phish_source = rest_api_source(source_config)
 
     pipeline = dlt.pipeline(

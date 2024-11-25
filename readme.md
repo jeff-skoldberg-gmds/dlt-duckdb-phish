@@ -20,3 +20,7 @@ pop in our API key.
 3. `explore-phish-data.ipynb`: A juypter notbook that helps you see inside the duckdb.  Also, the view which joins users to setlists is created here.
 4. `user_setlists_jsonl_to_local_files.py`: Spits "event data" of a user seeing a song at a show to jsonl locally.  No, I did not create event ID, etc.
 5. `user_setlists_jsonl_to_s3.py`: same thing but shoots it to S3 and also uses concurrency to gain some speed.
+
+
+## notes:
+The big pipeline, user+setlists, is not incremental and should be.  It is trivial to make it incremental, but this is just an experiment so it is not implemented.  LMK if you need it.

@@ -44,8 +44,8 @@ def load_phish_user_attendance() -> None:
         }
         
         attendance_source = rest_api_source(attendance_config)
-        attendance_info = pipeline.run(attendance_source)
-        print(f"Loaded attendance for user {user_id}")
+        info = pipeline.run(attendance_source)
+        print(f"Loaded attendance for user {info}")
 
     con.close()
 

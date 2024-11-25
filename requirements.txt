@@ -1,4 +1,0 @@
-duckdb
-dlt
-polars
-boto3
