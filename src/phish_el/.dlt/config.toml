@@ -1,5 +1,5 @@
 [runtime]
-log_level = "INFO"
+log_level = "DEBUG"
 dlthub_telemetry = false
 
 [source.phish_pipeline]
@@ -9,7 +9,8 @@ resources = [
     { name = "setlists", endpoint = "setlists.json" },
     { name = "songs", endpoint = "songs.json" },
     { name = "venues", endpoint = "venues.json" },
-    { name = "users", endpoint = "users/uid/0.json" }
+    { name = "users", endpoint = "users/uid/0.json" },
+    { name = "user_attendance", endpoint = { path = "attendance/uid/{user_id}.json", params = { user_id = { type = "resolve", resource = "users", field = "uid" } } } }
 ]
 
 [source.phish_pipeline.resource_defaults.endpoint.params]
