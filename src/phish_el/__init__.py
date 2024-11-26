@@ -1,4 +1,8 @@
-# to do, re-org folder so that .dlt is one level up with a call script, then this goes in __init
+'''
+shows, setlists, songs, venues are called with full load in parallel.
+users and user_attendance are called seperately so that user_attendance can be parallelized based on the full users response.
+1000 user setlists come back in about 20 seconds.  Compared to "slow_way.py" which takes 2 minutes to fetch 1000 user setlists.
+'''
 
 import logging.handlers
 import dlt
@@ -12,17 +16,6 @@ from time import time
 import logging
 
 logger = logging.getLogger("dlt")
-# Create a timed rotating file handler
-# file_handler = logging.handlers.TimedRotatingFileHandler(
-#     filename='pipeline.log',
-#     when='midnight',
-#     interval=1,
-#     backupCount=2
-# )
-# logger.addHandler(file_handler)
-# logger.setLevel(logging.INFO)
-# logger.info("Starting phish pipeline")
-
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
@@ -81,9 +74,19 @@ def phish_dot_net_source():
             return attendance
 
         for user in users_data:
+            if int(user["uid"]) % 500 == 0:
+                logger.info(f"Processing user {user['uid']}")
             if int(user["uid"]) % 100 == 0:
                 logger.debug(f"Processing user {user['uid']}")
             yield _get_attendance(user)
 
     # Yield parallel user attendance pipeline
     yield users | user_attendance
+
+def ship_to_mother_duck(local_duckdb_name='new.db', remote_db_name='ph_land_test'):
+    import duckdb
+    logger.info("Shipping to MotherDuck")
+    local_con = duckdb.connect(local_duckdb_name)
+    local_con.sql("ATTACH 'md:'")
+    local_con.sql("CREATE or replace DATABASE ph_land_test FROM CURRENT_DATABASE()")
+    logger.info("Shipped!")

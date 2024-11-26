@@ -1,3 +1,8 @@
+'''
+This was my first pass at iterating through the users to get user setlists.
+This was not easy to multithread because of how the user page is returned.
+'''
+
 import dlt
 from dlt.sources.rest_api import (
     rest_api_resources,
@@ -7,11 +12,11 @@ from dlt.sources.rest_api import (
 import os
 from time import time
 
-# change cwd to "this dir", one level up
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
-@dlt.source(name="phish_dot_net")
+
+
+@dlt.source(name="phish_dot_net", parallelized=True)
 def phish_dot_net_source():
     # Get configuration from config.toml
     config = dlt.config["source.phish_pipeline"]

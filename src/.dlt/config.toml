@@ -10,7 +10,7 @@ resources = [
     { name = "songs", endpoint = "songs.json" },
     { name = "venues", endpoint = "venues.json" },
     { name = "users", endpoint = "users/uid/0.json" },
-    { name = "user_attendance", endpoint = { path = "attendance/uid/{user_id}.json", params = { user_id = { type = "resolve", resource = "users", field = "uid" } } } }
+    { name = "user_attendance", endpoint = { path = "attendance/uid/{user_id}.json", params = { user_id = { type = "resolve", resource = "users", field = "uid" } } }, parallelized = true }
 ]
 
 [source.phish_pipeline.resource_defaults.endpoint.params]
