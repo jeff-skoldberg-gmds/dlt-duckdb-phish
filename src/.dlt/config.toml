@@ -1,5 +1,5 @@
 [runtime]
-log_level = "DEBUG"
+log_level = "INFO"
 dlthub_telemetry = false
 
 [source.phish_pipeline]
