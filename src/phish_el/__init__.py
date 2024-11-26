@@ -5,9 +5,7 @@ import logging.handlers
 import dlt
 from dlt.sources.helpers import requests
 from dlt.sources.rest_api import (
-    rest_api_source,
     rest_api_resources,
-    check_connection,
     RESTAPIConfig,
 )
 import os

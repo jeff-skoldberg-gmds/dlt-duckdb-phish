@@ -1,12 +1,8 @@
 
 import logging.handlers
 import dlt
-from dlt.sources.helpers import requests
 from dlt.sources.rest_api import (
-    rest_api_source,
-    rest_api_resources,
     check_connection,
-    RESTAPIConfig,
 )
 import os
 from time import time
@@ -45,7 +41,7 @@ def run_pipeline():
 
     # Run the pipeline
     load_info = pipeline.run(phish_dot_net_source(), loader_file_format="parquet")
-    logger.info(f"\nPipeline load info:")
+    logger.info("\nPipeline load info:")
     logger.info(load_info)
 
 

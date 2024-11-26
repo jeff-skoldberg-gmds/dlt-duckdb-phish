@@ -5,7 +5,6 @@ import logging.handlers
 import dlt
 from dlt.sources.helpers import requests
 from dlt.sources.rest_api import (
-    rest_api_source,
     rest_api_resources,
     check_connection,
     RESTAPIConfig,
@@ -39,8 +38,6 @@ def phish_dot_net_source():
     api_key = dlt.secrets.get("sources.phish_pipeline.api_key")
     if not api_key:
         raise ValueError("API key not found in secrets.toml")
-
-    main_config = config["resources"]
 
     basic_resources = [r for r in config["resources"] if r["name"] not in ["users", "user_attendance"]]
     
@@ -106,7 +103,7 @@ def run_pipeline():
 
     # Run the pipeline
     load_info = pipeline.run(phish_dot_net_source(), loader_file_format="parquet")
-    logger.info(f"\nPipeline load info:")
+    logger.info("\nPipeline load info:")
     logger.info(load_info)
 
 

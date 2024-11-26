@@ -3,7 +3,6 @@
 
 import dlt
 from dlt.sources.rest_api import (
-    rest_api_source,
     rest_api_resources,
     check_connection,
     RESTAPIConfig,
@@ -62,7 +61,7 @@ def run_pipeline():
 
     # Run the pipeline
     load_info = pipeline.run(phish_dot_net_source())
-    print(f"\nPipeline load info:")
+    print("\nPipeline load info:")
     print(load_info)
 
 
