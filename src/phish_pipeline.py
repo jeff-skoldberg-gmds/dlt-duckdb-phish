@@ -1,4 +1,3 @@
-
 import logging.handlers
 import dlt
 from dlt.sources.rest_api import (
@@ -10,13 +9,10 @@ import logging
 from phish_el import phish_dot_net_source
 
 
-logger = logging.getLogger('dlt')
+logger = logging.getLogger("dlt")
 # Create a timed rotating file handler
 file_handler = logging.handlers.TimedRotatingFileHandler(
-    filename='pipeline.log',
-    when='midnight',
-    interval=1,
-    backupCount=2
+    filename="pipeline.log", when="midnight", interval=1, backupCount=2
 )
 logger.addHandler(file_handler)
 logger.setLevel(logging.INFO)
@@ -26,11 +22,10 @@ logger.info("Starting phish pipeline")
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
-
 def run_pipeline():
     pipeline = dlt.pipeline(
         pipeline_name="phish_pipeline",
-        destination=dlt.destinations.duckdb('new.db'),
+        destination=dlt.destinations.duckdb("new.db"),
         dataset_name="phish_data",
     )
 
@@ -52,6 +47,7 @@ if __name__ == "__main__":
     # log time in minutes rounded to 1 decimal place
     logger.info(f"Pipeline completed in {(end_time - start_time) / 60:.1f} minutes")
     import duckdb
+
     logger.info("Shipping to MotherDuck")
     local_con = duckdb.connect("new.db")
     local_con.sql("ATTACH 'md:'")

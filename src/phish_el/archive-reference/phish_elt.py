@@ -1,6 +1,3 @@
-
-# to do, re-org folder so that .dlt is one level up with a call script, then this goes in __init
-
 import dlt
 from dlt.sources.rest_api import (
     rest_api_resources,
@@ -26,10 +23,8 @@ def phish_dot_net_source():
 
     main_config = config["resources"]
 
-    
-    
     # Create the source configuration
-    resource_config : RESTAPIConfig = {
+    resource_config: RESTAPIConfig = {
         "client": {"base_url": config["base_url"]},
         "resources": main_config,
         "resource_defaults": {
