@@ -15,3 +15,16 @@ resources = [
 
 [source.phish_pipeline.resource_defaults.endpoint.params]
 limit = 0
+
+[data_writer]
+file_max_items=100000
+
+[sources]
+file_max_items=100000
+
+[extract]
+workers = 6
+
+[normalize]
+workers=4
+start_method="spawn"
