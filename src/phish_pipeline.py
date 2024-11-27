@@ -29,7 +29,9 @@ def main(local_duckdb_name="duck.db", remote_db_name="raw", target_schema_name="
         f"DLT Pipeline completed in {(dlt_pipeline_completed_at - pipeline_started_at) / 60:.1f} minutes"
     )
 
-    ship_to_mother_duck(local_duckdb_name="new.db", remote_db_name="ph_land_test")
+    ship_to_mother_duck(
+        local_duckdb_name=local_duckdb_name, remote_db_name=remote_db_name
+    )
 
     logger.info(
         f"Total elapsed time: {(time() - pipeline_started_at) / 60:.1f} minutes"
