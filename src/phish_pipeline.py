@@ -4,7 +4,7 @@ from phish_el import phish_dot_net_source, ship_to_mother_duck
 from utilities.logging import logger
 
 
-def run_dlt_pipeline(local_duckdb_name="new.db"):
+def run_dlt_pipeline(local_duckdb_name="duck.db", target_schema_name="phish"):
     logger.info("Starting DLT pipeline")
     pipeline = dlt.pipeline(
         pipeline_name="phish_pipeline",
@@ -18,10 +18,12 @@ def run_dlt_pipeline(local_duckdb_name="new.db"):
     logger.info(load_info)
 
 
-def main():
+def main(local_duckdb_name="duck.db", remote_db_name="raw", target_schema_name="phish"):
     pipeline_started_at = time()
     logger.info("Main function started at %s", pipeline_started_at)
-    run_dlt_pipeline()
+    run_dlt_pipeline(
+        local_duckdb_name=local_duckdb_name, target_schema_name=target_schema_name
+    )
     dlt_pipeline_completed_at = time()
     logger.info(
         f"DLT Pipeline completed in {(dlt_pipeline_completed_at - pipeline_started_at) / 60:.1f} minutes"
@@ -35,4 +37,11 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    local_duckdb_name = "duck.db"
+    target_schema_name = "phish"
+    remote_db_name = "raw"
+    main(
+        local_duckdb_name=local_duckdb_name,
+        remote_db_name=remote_db_name,
+        target_schema_name=target_schema_name,
+    )
