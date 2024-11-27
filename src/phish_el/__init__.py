@@ -1,8 +1,8 @@
-'''
+"""
 shows, setlists, songs, venues are called with full load in parallel.
 users and user_attendance are called seperately so that user_attendance can be parallelized based on the full users response.
 1000 user setlists come back in about 20 seconds.  Compared to "slow_way.py" which takes 2 minutes to fetch 1000 user setlists.
-'''
+"""
 
 import logging.handlers
 import dlt
@@ -12,7 +12,6 @@ from dlt.sources.rest_api import (
     RESTAPIConfig,
 )
 import os
-from time import time
 import logging
 
 logger = logging.getLogger("dlt")
@@ -83,8 +82,10 @@ def phish_dot_net_source():
     # Yield parallel user attendance pipeline
     yield users | user_attendance
 
-def ship_to_mother_duck(local_duckdb_name='new.db', remote_db_name='ph_land_test'):
+
+def ship_to_mother_duck(local_duckdb_name="new.db", remote_db_name="ph_land_test"):
     import duckdb
+
     logger.info("Shipping to MotherDuck")
     local_con = duckdb.connect(local_duckdb_name)
     local_con.sql("ATTACH 'md:'")

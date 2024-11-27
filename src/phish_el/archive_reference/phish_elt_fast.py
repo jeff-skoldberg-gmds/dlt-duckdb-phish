@@ -1,8 +1,8 @@
-'''
+"""
 this is basically what is in __init__.py in the main phish_el package
 archiving it here for reference as things evolve over time.
 this is not used by any scripts in /src
-'''
+"""
 
 import logging.handlers
 import dlt

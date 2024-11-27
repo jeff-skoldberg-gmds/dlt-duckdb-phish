@@ -1,7 +1,7 @@
-'''
+"""
 This was my first pass at iterating through the users to get user setlists.
 This was not easy to multithread because of how the user page is returned.
-'''
+"""
 
 import dlt
 from dlt.sources.rest_api import (
@@ -9,11 +9,7 @@ from dlt.sources.rest_api import (
     check_connection,
     RESTAPIConfig,
 )
-import os
 from time import time
-
-
-
 
 
 @dlt.source(name="phish_dot_net", parallelized=True)
