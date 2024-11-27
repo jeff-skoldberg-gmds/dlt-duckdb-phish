@@ -1,0 +1,15 @@
+[project]
+name = "dlt-duckdb-phish"
+version = "0.1.0"
+description = "This project gets data from the Phish.net API, loads it to DuckDB, and publishes to MotherDuck."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "dlt[duckdb,parquet]>=1.3.0",
+    "duckdb>=1.1.3",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.8.0",
+]

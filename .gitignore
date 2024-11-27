@@ -10,3 +10,7 @@ secrets.toml
 *.wal
 .venv/
 .vscode/
+output/
+*.db
+*.log
+*.ruff_cache/

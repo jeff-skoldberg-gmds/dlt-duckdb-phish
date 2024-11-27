@@ -9,8 +9,22 @@ resources = [
     { name = "setlists", endpoint = "setlists.json" },
     { name = "songs", endpoint = "songs.json" },
     { name = "venues", endpoint = "venues.json" },
-    { name = "users", endpoint = "users/uid/0.json" }
+    { name = "users", endpoint = "users/uid/0.json" },
+    { name = "user_attendance", endpoint = { path = "attendance/uid/{user_id}.json", params = { user_id = { type = "resolve", resource = "users", field = "uid" } } }, parallelized = true }
 ]
 
 [source.phish_pipeline.resource_defaults.endpoint.params]
 limit = 0
+
+[data_writer]
+file_max_items=100000
+
+[sources]
+file_max_items=100000
+
+[extract]
+workers = 6
+
+[normalize]
+workers=4
+start_method="spawn"
