@@ -12,5 +12,5 @@ secrets.toml
 .vscode/
 output/
 *.db
-*.log
+*.log*
 *.ruff_cache/

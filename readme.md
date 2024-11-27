@@ -41,12 +41,14 @@ python phish_pipeline.py
 
 ## Notes on files and directories
 1. `src\phish_pipeline.py`: Runs the import phish.net APIs, including fetching every show for every user of the platform.  It requires you set up .dlt/secrets.toml
-2. `slow_way.py`: You can ignore it.  It is demonstrating how I did this before getting dlt concurrency to work.  The approach is still neat, so I kept it for reference.  It uses "resolves" the user/shows combination by calling the 
+2. `slow_way.py`: You can ignore it.  It is demonstrating how I did this before getting dlt concurrency to work.  The approach is still neat, so I kept it for reference.  It uses dlt's "resolve" to resolve the user/shows combinations.
 3. `src\utilities\`: This is where the logging is set up and where the log files end up.
 4. `src\phish_el\`: This is where the dlt `source` and `resources` are (in `__init__.py`). This is also where your duckdb ends up.
 5. `src\phish_el\archive_reference\`: Stuff I'm not using anymore but wanted to keep for reference.
 
 
 ## to-do:
+Add user's motherduck token to the secrets.toml file and create a way for it to be passed to the function!
+Right now this only works if their MD token is stored in env vars.
 Need to add the "create view" step before shipping to MotherDuck.
 Create the the view of user||shows||setlists
