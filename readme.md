@@ -1,12 +1,30 @@
-# phish api shtuff
+# phish.net api shtuff
+## About
+This repo does the following:
+- Loads the following phish.net endpoints to a local duckdb:
+  - shows (shows.json)
+  - songs (songs.json)
+  - venues (venues.json)
+  - setlists (setlists.json)
+  - users (users/uid/0.json)
+  - user attendance (attendance/uid/{user_id}.json)
+- Ships the local duckdb to MotherDuck for sharing and analysis.
+
+It does this using dlt and is very fast considering the number of API calls it makes.
+
+The entire package runs in about 20 minutes.
 
 ## getting started
 ### set up the env
+install `uv` per [the docs](https://docs.astral.sh/uv/getting-started/installation/)  
+That should be all you need to do.  
+You can run `uv sync` just to make sure it is all working, but you shouldn't have to.  
+
+Or, if you a masochist, you can:
 ```
-# mac, use python3 and bin/activate.
-# windwos, use python and Scripts/activate
-python3 -m venv .venv
-. .venv/bin/activate
+python -m venv .venv
+source .venv/bin/Activate
+pip install -r requirements
 ```
 
 ### set up your api secret
@@ -14,13 +32,21 @@ locate `.dlt/secrets.toml.example` and rename it to `.dlt/secrets.toml` (which i
 
 pop in our API key.
 
-## files
-1. `phish_elt.py`: extracts the basic phish apis using dlt.  It requires you set up .dlt/secrets.toml
-2. `phish_users_attendance_elt.py`: uses dlt to pass each user ID to the attendance API.
-3. `explore-phish-data.ipynb`: A juypter notbook that helps you see inside the duckdb.  Also, the view which joins users to setlists is created here.
-4. `user_setlists_jsonl_to_local_files.py`: Spits "event data" of a user seeing a song at a show to jsonl locally.  No, I did not create event ID, etc.
-5. `user_setlists_jsonl_to_s3.py`: same thing but shoots it to S3 and also uses concurrency to gain some speed.
+### run the pipeline
+```
+cd src
+# phish_pipeline.py must be run from the src directory!
+python phish_pipeline.py
+```
+
+## Notes on files and directories
+1. `src\phish_pipeline.py`: Runs the import phish.net APIs, including fetching every show for every user of the platform.  It requires you set up .dlt/secrets.toml
+2. `slow_way.py`: You can ignore it.  It is demonstrating how I did this before getting dlt concurrency to work.  The approach is still neat, so I kept it for reference.  It uses "resolves" the user/shows combination by calling the 
+3. `src\utilities\`: This is where the logging is set up and where the log files end up.
+4. `src\phish_el\`: This is where the dlt `source` and `resources` are (in `__init__.py`). This is also where your duckdb ends up.
+5. `src\phish_el\archive_reference\`: Stuff I'm not using anymore but wanted to keep for reference.
 
 
-## notes:
-The big pipeline, user+setlists, is not incremental and should be.  It is trivial to make it incremental, but this is just an experiment so it is not implemented.  LMK if you need it.
+## to-do:
+Need to add the "create view" step before shipping to MotherDuck.
+Create the the view of user||shows||setlists
