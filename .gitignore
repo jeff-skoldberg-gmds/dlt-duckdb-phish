@@ -1,5 +1,12 @@
 # ignore secrets, virtual environments and typical python compilation artifacts
 secrets.toml
+*.secrets.toml
+**/.dlt/secrets.toml
+**/.dlt/*.secrets.toml
+# ignore dlthub workspace local data/state (pipeline runs, load packages, duckdb state)
+**/.dlt/data/
+**/.dlt/state/
+**/.dlt/.workspace
 # ignore basic python artifacts
 .env
 **/__pycache__/
