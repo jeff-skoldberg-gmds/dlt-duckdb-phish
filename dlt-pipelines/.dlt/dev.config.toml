@@ -1,0 +1,3 @@
+# dev-profile overrides — local runs (uv run python phish_pipeline.py)
+[destination]
+name = "duckdb"

@@ -1,0 +1,6 @@
+# prod-profile overrides — used by runtime (dltHub Platform) batch jobs
+[destination]
+name = "motherduck"
+
+[destination.motherduck]
+database = "ph_land_test"

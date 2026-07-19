@@ -1,0 +1,34 @@
+# put your configuration values here
+
+[runtime]
+log_level = "WARNING"  # the system log level of dlt
+dlthub_telemetry = false
+
+[sources.phish_pipeline]
+base_url = "https://api.phish.net/v5/"
+# users/user_attendance is the full user-attendance join (potentially tens/hundreds of
+# millions of rows, one request per user) — off until incremental strategy is implemented,
+# see docs/user-attendance-incremental-options.md
+enable_user_attendance = false
+resources = [
+    { name = "shows", endpoint = "shows.json" },
+    { name = "setlists", endpoint = "setlists.json" },
+    { name = "songs", endpoint = "songs.json" },
+    { name = "venues", endpoint = "venues.json" },
+]
+
+[sources.phish_pipeline.resource_defaults.endpoint.params]
+limit = 0
+
+[data_writer]
+file_max_items = 100000
+
+[sources]
+file_max_items = 100000
+
+[extract]
+workers = 6
+
+[normalize]
+workers = 4
+start_method = "spawn"
