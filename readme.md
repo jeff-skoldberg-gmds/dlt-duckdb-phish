@@ -28,23 +28,26 @@ pip install -r requirements
 ```
 
 ### set up your api secret
-locate `.dlt/secrets.toml.example` and rename it to `.dlt/secrets.toml` (which is git ignored.)
-
-pop in our API key.
+edit `dlt-pipelines/.dlt/secrets.toml` (git ignored) and add your API key under `[sources.phish_pipeline]`:
+```toml
+[sources.phish_pipeline]
+api_key = "your-key-here"
+```
 
 ### run the pipeline
 ```
-cd src
-# phish_pipeline.py must be run from the src directory!
-python phish_pipeline.py
+cd dlt-pipelines
+uv run python phish_pipeline.py
 ```
+dlt resolves `.dlt/config.toml` and `.dlt/secrets.toml` relative to the directory you run from, so you must `cd dlt-pipelines` first (this repo is a monorepo — `dlt-pipelines/` is one project among others, e.g. a future `dbt/` or app folder).
 
 ## Notes on files and directories
-1. `src\phish_pipeline.py`: Runs the import phish.net APIs, including fetching every show for every user of the platform.  It requires you set up .dlt/secrets.toml
-2. `slow_way.py`: You can ignore it.  It is demonstrating how I did this before getting dlt concurrency to work.  The approach is still neat, so I kept it for reference.  It uses dlt's "resolve" to resolve the user/shows combinations.
-3. `src\utilities\`: This is where the logging is set up and where the log files end up.
-4. `src\phish_el\`: This is where the dlt `source` and `resources` are (in `__init__.py`). This is also where your duckdb ends up.
-5. `src\phish_el\archive_reference\`: Stuff I'm not using anymore but wanted to keep for reference.
+All pipeline code lives under `dlt-pipelines/`:
+1. `dlt-pipelines/phish_pipeline.py`: Runs the phish.net APIs, including fetching every show for every user of the platform. It requires you set up `dlt-pipelines/.dlt/secrets.toml`.
+2. `dlt-pipelines/slow_way.py`: You can ignore it. It is demonstrating how I did this before getting dlt concurrency to work. The approach is still neat, so I kept it for reference. It uses dlt's "resolve" to resolve the user/shows combinations.
+3. `dlt-pipelines/phish_el/`: This is where the dlt `source` and `resources` are (in `__init__.py`).
+4. `dlt-pipelines/phish_el/archive_reference/`: Stuff I'm not using anymore but wanted to keep for reference.
+5. `dlt-pipelines/.dlt/config.toml` / `dlt-pipelines/.dlt/secrets.toml`: pipeline config and credentials for this sub-project.
 
 
 ## to-do:
