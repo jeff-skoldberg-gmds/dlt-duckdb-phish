@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: eras_placeholder
+    meta:
+      experts:
+        users:
+          - jeff@gmdata.co

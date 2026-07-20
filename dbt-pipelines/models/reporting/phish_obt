@@ -1,0 +1,12 @@
+with 
+setlists as (SELECT * FROM {{ ref('phish_setlists') }}),
+stats as (SELECT * FROM {{ ref('phish_song_stats') }}),
+joined AS
+(
+select 
+*
+from
+setlists join stats using (song_Id)
+
+)
+select * from joined

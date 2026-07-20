@@ -1,0 +1,17 @@
+version: 2
+
+alerts:
+  - name: phish_build_alert
+    config:
+      trigger:
+        type: orchestration_status
+        orchestrations:
+          - build_dashboard
+        triggered_on:
+          - ready
+          - partially_ready
+          - invalid
+      destinations:
+        email:
+          email_addresses:
+            - jeff@gmdata.co

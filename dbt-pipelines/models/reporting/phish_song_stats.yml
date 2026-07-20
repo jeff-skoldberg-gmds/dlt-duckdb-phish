@@ -1,0 +1,87 @@
+version: 2
+
+models:
+  - name: phish_song_stats
+    columns:
+      - name: SONG
+        description: ""
+        data_type: TEXT
+      - name: IS_SECOND_SET_OPENER
+        description: ""
+        data_type: BOOLEAN
+      - name: IS_SHOW_OPENER
+        description: ""
+        data_type: BOOLEAN
+      - name: IS_ENCORE
+        description: ""
+        data_type: BOOLEAN
+      - name: ENCORE_OPENER_COUNT
+        description: ""
+        data_type: NUMBER
+      - name: SECOND_SET_OPENER_COUNT
+        description: ""
+        data_type: NUMBER
+      - name: ENCORE_COUNT
+        description: ""
+        data_type: NUMBER
+      - name: SHOW_OPENER_COUNT
+        description: ""
+        data_type: NUMBER
+      - name: TIMES_PLAYED
+        description: ""
+        data_type: NUMBER
+      - name: GAP_OPENER
+        description: ""
+        data_type: NUMBER
+      - name: GAP_SECOND_OPENER
+        description: ""
+        data_type: NUMBER
+      - name: LAST_SECOND_SET_OPENER_DATE
+        description: ""
+        data_type: DATE
+      - name: GAP_ENCORE
+        description: ""
+        data_type: NUMBER
+      - name: IS_ENCORE_OPENER
+        description: ""
+        data_type: BOOLEAN
+      - name: GAP_ENCORE_OPENER
+        description: ""
+        data_type: NUMBER
+      - name: LAST_OPENER_DATE
+        description: ""
+        data_type: DATE
+      - name: LAST_ENCORE_OPENER_DATE
+        description: ""
+        data_type: DATE
+      - name: LAST_ENCORE_DATE
+        description: ""
+        data_type: DATE
+      - name: SONG_ID
+        description: ""
+        data_type: NUMBER
+        tests:
+          - unique
+      - name: LAST_PLAYED_DATE
+        description: ""
+        data_type: DATE
+      - name: FIRST_OPENER_DATE
+        data_type: DATE
+      - name: FIRST_SECOND_SET_OPENER_DATE
+        data_type: DATE
+      - name: FIRST_ENCORE_OPENER_DATE
+        data_type: DATE
+      - name: FIRST_ENCORE_DATE
+        data_type: DATE
+    config:
+      tags:
+        - reporting
+        - business_critcal
+      meta:
+        asset_status: draft
+        tier: tier 1
+        experts:
+          users:
+            - jeff@gmdata.co
+          teams: []
+    description: Song stats model, main model used to predict next show opener, encore etc.

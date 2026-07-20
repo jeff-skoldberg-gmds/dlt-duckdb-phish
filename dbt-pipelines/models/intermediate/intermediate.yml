@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: int_show_date_gap
+    columns:
+      - name: GAP
+        data_type: NUMBER
+      - name: SHOW_DATE
+        data_type: DATE
+    description: The number of shows between any show-date and the most recent show.  Think if it like a "date diff from current date", but instead, number of shows since the current show.
+    config:
+      tags:
+        - intermediate
+      meta:
+        asset_status: draft
+        tier: tier 1
+        experts:
+          users:
+            - jeff@gmdata.co
+          teams: []

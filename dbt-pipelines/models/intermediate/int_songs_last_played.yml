@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: int_songs_last_played
+    columns:
+      - name: GAP
+        data_type: NUMBER
+      - name: DEBUT_DATE
+        data_type: DATE
+      - name: SONG
+        data_type: TEXT
+      - name: LAST_PLAYED_DATE
+        data_type: DATE
+      - name: TIMES_PLAYED
+        data_type: NUMBER
+      - name: SONG_ID
+        data_type: NUMBER
+    config:
+      tags:
+        - intermediate
+      meta:
+        asset_status: draft
+        tier: tier 1
+        experts:
+          users:
+            - jeff@gmdata.co
+          teams: []
+    description: >-
+      This table gives you the first time (debut date) and the last date a song
+      was played.  It also gives the "gap" in days.
+
+      This is redundant information that can be found on the "songs" table; but we decided to not use the songs table to simplify the DAG.

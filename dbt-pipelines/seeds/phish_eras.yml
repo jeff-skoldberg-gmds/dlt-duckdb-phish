@@ -1,0 +1,28 @@
+version: 2
+
+seeds:
+  - name: phish_eras
+    columns:
+      - name: START_DATE
+        data_type: TEXT
+      - name: ERA
+        data_type: TEXT
+      - name: END_DATE
+        data_type: TEXT
+    config:
+      tags:
+        - seed
+      meta:
+        asset_status: verified
+        tier: tier 2
+        experts:
+          users:
+            - jeff@gmdata.co
+          teams: []
+    description: >-
+      Seed file representing the eras of the band.  Hiatus date ranges are not
+      included, i.e. there are gaps in the date ranges.
+
+
+
+      The date ranges have been verified that NO valid shows occurred during the missing date ranges.

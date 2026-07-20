@@ -1,0 +1,144 @@
+version: 2
+
+models:
+  - name: phish_setlists
+    columns:
+      - name: SHOW_ID
+        description: ""
+        data_type: NUMBER
+      - name: COUNTRY
+        description: ""
+        data_type: TEXT
+      - name: STATE
+        description: ""
+        data_type: TEXT
+      - name: TRACKTIME
+        description: ""
+        data_type: TEXT
+      - name: VENUE_ID
+        description: ""
+        data_type: NUMBER
+      - name: TOUR_WHEN
+        description: ""
+        data_type: TEXT
+      - name: CITY
+        description: ""
+        data_type: TEXT
+      - name: ROW_COUNT
+        description: ""
+        data_type: NUMBER
+      - name: SLUG
+        description: ""
+        data_type: TEXT
+      - name: IS_REPRISE
+        description: ""
+        data_type: TEXT
+      - name: VENUE
+        description: ""
+        data_type: TEXT
+      - name: POSITION
+        description: ""
+        data_type: NUMBER
+      - name: NICKNAME
+        description: ""
+        data_type: TEXT
+      - name: META
+        description: ""
+        data_type: TEXT
+      - name: TOUR_NAME
+        description: ""
+        data_type: TEXT
+      - name: GAP
+        description: ""
+        data_type: TEXT
+      - name: PERMALINK
+        description: ""
+        data_type: TEXT
+      - name: IS_JAM
+        description: ""
+        data_type: TEXT
+      - name: IS_EXCLUDED
+        description: ""
+        data_type: BOOLEAN
+      - name: TRANSITION
+        description: ""
+        data_type: TEXT
+      - name: TRANS_MARK
+        description: ""
+        data_type: TEXT
+      - name: TOUR_ID
+        description: ""
+        data_type: NUMBER
+      - name: _SET
+        description: ""
+        data_type: TEXT
+      - name: SETLISTNOTES
+        description: ""
+        data_type: TEXT
+      - name: SONG
+        description: ""
+        data_type: TEXT
+      - name: SHOW_DATE
+        description: ""
+        data_type: DATE
+      - name: JAMCHART_DESCRIPTION
+        description: ""
+        data_type: TEXT
+      - name: ARTIST_NAME
+        description: ""
+        data_type: TEXT
+      - name: SONG_ID
+        description: ""
+        data_type: NUMBER
+      - name: ARTIST_SLUG
+        description: ""
+        data_type: TEXT
+      - name: UNIQUE_ID
+        description: ""
+        data_type: NUMBER
+      - name: REVIEWS
+        description: ""
+        data_type: TEXT
+      - name: SOUND_CHECK_SONGS
+        description: ""
+        data_type: TEXT
+      - name: FOOTNOTE
+        description: ""
+        data_type: TEXT
+      - name: IS_JAME_CHART
+        description: ""
+        data_type: BOOLEAN
+      - name: IS_ORIGINAL
+        description: ""
+        data_type: BOOLEAN
+      - name: SHOWYEAR
+        description: ""
+        data_type: TEXT
+      - name: ARTIST_ID
+        description: ""
+        data_type: NUMBER
+      - name: IS_CURRENT_SHOW
+        description: ""
+        data_type: BOOLEAN
+      - name: SHOWS_AGO
+        description: ""
+        data_type: NUMBER
+      - name: ERA
+        data_type: TEXT
+        tests:
+          - not_null
+        description: Era comes from some hard-coded dates.  It should never contain null, but if it does, the DAG should stop.
+    description: >+
+      The setlists table, filtered to phish only and excludes one-off
+      performances that should not be counted for stats purposes.
+
+    config:
+      tags:
+        - reporting
+        - business_critcal
+      meta:
+        experts:
+          users:
+            - jeff@gmdata.co
+        asset_status: draft
+        tier: tier 1

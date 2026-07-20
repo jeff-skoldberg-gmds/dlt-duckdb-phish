@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: phish_obt
+    meta:
+      experts:
+        users:
+          - jeff@gmdata.co

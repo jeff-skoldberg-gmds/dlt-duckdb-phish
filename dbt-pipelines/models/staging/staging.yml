@@ -1,0 +1,300 @@
+version: 2
+
+models:
+  - name: stg_phishapi__songs
+    columns:
+      - name: DEBUT
+        description: ""
+        data_type: TEXT
+      - name: GAP
+        description: ""
+        data_type: TEXT
+      - name: SONG_ID
+        description: ""
+        data_type: TEXT
+      - name: DEBUT_PERMALINK
+        description: ""
+        data_type: TEXT
+      - name: LAST_PERMALINK
+        description: ""
+        data_type: TEXT
+      - name: ABBR
+        description: ""
+        data_type: TEXT
+      - name: ARTIST
+        description: ""
+        data_type: TEXT
+      - name: LAST_PLAYED
+        description: ""
+        data_type: DATE
+      - name: SLUG
+        description: ""
+        data_type: TEXT
+      - name: SONG
+        description: ""
+        data_type: TEXT
+    config:
+      tags:
+        - staging
+      meta:
+        experts:
+          users:
+            - jeff@gmdata.co
+        asset_status: verified
+        tier: tier 1
+    description: Set columns names and data types to be used for all downstream models.
+
+  - name: stg_phishapi__shows
+    columns:
+      - name: ARTIST_ID
+        data_type: NUMBER
+      - name: SHOW_DATE
+        data_type: DATE
+      - name: VENUE
+        data_type: TEXT
+      - name: ARTIST_NAME
+        data_type: TEXT
+      - name: TOUR_ID
+        data_type: TEXT
+      - name: STATE
+        data_type: TEXT
+      - name: VENUE_ID
+        data_type: TEXT
+      - name: SHOW_YEAR
+        data_type: NUMBER
+      - name: TOUR_NAME
+        data_type: TEXT
+      - name: SHOW_ID
+        data_type: NUMBER
+        tests: []
+      - name: COUNTRY
+        data_type: TEXT
+      - name: IS_EXCLUDED_FROM_STATS
+        data_type: BOOLEAN
+      - name: UPDATED_AT
+        data_type: TEXT
+      - name: PERMALINK
+        data_type: TEXT
+      - name: SHOW_DAY
+        data_type: NUMBER
+      - name: SHOW_MONTH
+        data_type: NUMBER
+      - name: CITY
+        data_type: TEXT
+      - name: SETLIST_NOTES
+        data_type: TEXT
+    config:
+      tags:
+        - staging
+      meta:
+        experts:
+          users:
+            - jeff@gmdata.co
+        asset_status: verified
+        tier: tier 3
+    description: |
+      Set columns names and data types to be used for all downstream models.
+
+  - name: stg_phishapi__setlists
+    columns:
+      - name: META
+        description: ""
+        data_type: TEXT
+      - name: IS_REPRISE
+        description: ""
+        data_type: TEXT
+      - name: CITY
+        description: ""
+        data_type: TEXT
+      - name: IS_JAM
+        description: ""
+        data_type: TEXT
+      - name: COUNTRY
+        description: ""
+        data_type: TEXT
+      - name: TRANS_MARK
+        description: ""
+        data_type: TEXT
+      - name: TOUR_NAME
+        description: ""
+        data_type: TEXT
+      - name: GAP
+        description: ""
+        data_type: TEXT
+      - name: IS_ORIGINAL
+        description: ""
+        data_type: BOOLEAN
+      - name: ARTIST_NAME
+        description: ""
+        data_type: TEXT
+      - name: TOUR_ID
+        description: ""
+        data_type: NUMBER
+      - name: TRANSITION
+        description: ""
+        data_type: TEXT
+      - name: REVIEWS
+        description: ""
+        data_type: TEXT
+      - name: POSITION
+        description: ""
+        data_type: NUMBER
+      - name: FOOTNOTE
+        description: ""
+        data_type: TEXT
+      - name: SOUND_CHECK_SONGS
+        description: ""
+        data_type: TEXT
+      - name: IS_JAME_CHART
+        description: ""
+        data_type: BOOLEAN
+      - name: SHOW_ID
+        description: ""
+        data_type: NUMBER
+      - name: SHOW_DATE
+        description: ""
+        data_type: DATE
+      - name: TRACKTIME
+        description: ""
+        data_type: TEXT
+      - name: UNIQUE_ID
+        description: ""
+        data_type: NUMBER
+      - name: ARTIST_SLUG
+        description: ""
+        data_type: TEXT
+      - name: SETLISTNOTES
+        description: ""
+        data_type: TEXT
+      - name: ARTIST_ID
+        description: ""
+        data_type: NUMBER
+      - name: TOUR_WHEN
+        description: ""
+        data_type: TEXT
+      - name: VENUE_ID
+        description: ""
+        data_type: NUMBER
+      - name: SLUG
+        description: ""
+        data_type: TEXT
+      - name: ROW_COUNT
+        description: ""
+        data_type: NUMBER
+      - name: IS_EXCLUDED
+        description: ""
+        data_type: BOOLEAN
+      - name: NICKNAME
+        description: ""
+        data_type: TEXT
+      - name: PERMALINK
+        description: ""
+        data_type: TEXT
+      - name: SONG
+        description: ""
+        data_type: TEXT
+      - name: JAMCHART_DESCRIPTION
+        description: ""
+        data_type: TEXT
+      - name: SHOWYEAR
+        description: ""
+        data_type: TEXT
+      - name: VENUE
+        description: ""
+        data_type: TEXT
+      - name: STATE
+        description: ""
+        data_type: TEXT
+      - name: SONG_ID
+        description: ""
+        data_type: NUMBER
+      - name: _SET
+        description: ""
+        data_type: TEXT
+    description: Set columns names and data types to be used for all downstream models.
+    config:
+      tags:
+        - staging
+
+      meta:
+        experts:
+          users:
+            - jeff@gmdata.co
+        asset_status: verified
+        tier: tier 1
+  - name: stg_phishapi__artists
+    columns:
+      - name: ARTIST
+        description: ""
+        data_type: TEXT
+      - name: SLUG
+        description: ""
+        data_type: TEXT
+      - name: ARTIST_ID
+        description: ""
+        data_type: NUMBER
+        tests:
+          - unique
+          - not_null
+    description: Sets columns names and data types to be used for all downstream models.
+    config:
+      tags:
+        - staging
+
+      meta:
+        experts:
+          users:
+            - jeff@gmdata.co
+        asset_status: verified
+        tier: tier 3
+  - name: stg_phishapi__eras
+    description: |-
+      Eras of the band.
+      Note: the table does not contain "hiatus" date ranges.
+    columns:
+      - name: END_DATE
+        data_type: DATE
+      - name: START_DATE
+        data_type: DATE
+      - name: ERA
+        data_type: TEXT
+    config:
+      tags:
+        - staging
+
+      meta:
+        experts:
+          users:
+            - jeff@gmdata.co
+        tier: tier 2
+        asset_status: draft
+  - name: stg_phishapi__venues
+    columns:
+      - name: CITY
+        data_type: TEXT
+      - name: SHORT_NAME
+        data_type: TEXT
+      - name: VENUE_NAME
+        data_type: TEXT
+      - name: COUNTRY
+        data_type: TEXT
+      - name: STATE
+        data_type: TEXT
+      - name: VENUE_ID
+        data_type: NUMBER
+        tests: []
+      - name: VENUE_NOTES
+        data_type: TEXT
+      - name: ALIAS
+        data_type: TEXT
+    description: Set columns names and data types to be used for all downstream models.
+    config:
+      tags:
+        - staging
+
+      meta:
+        experts:
+          users:
+            - jeff@gmdata.co
+        asset_status: verified
+        tier: tier 3

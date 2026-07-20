@@ -1,0 +1,13 @@
+with eras as (select * from {{ ref('phish_eras') }}),
+
+renamed as (
+
+    select
+    era,
+    start_date::date as start_date,
+    end_date::date as end_date
+
+    from eras
+)
+
+select * from renamed

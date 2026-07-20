@@ -1,0 +1,24 @@
+version: 2
+
+exposures:
+  - name: phish_history_dashboard
+    depends_on:
+      - ref('phish_song_stats')
+      - ref('phish_setlists')
+    owner:
+      name: Jeff Skoldberg
+      email: jeff@gmdata.co
+    type: dashboard
+    maturity: low
+    url: http://definitelyupdatethis.com
+    description: The whole point of this project and the answer to the ultimate question.
+    config:
+      tags:
+        - business_critcal
+        - dashboard
+      meta:
+        experts:
+          users:
+            - jeff@gmdata.co
+        asset_status: draft
+        tier: tier 1

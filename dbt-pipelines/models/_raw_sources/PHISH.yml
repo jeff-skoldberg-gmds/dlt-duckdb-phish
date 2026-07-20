@@ -1,0 +1,290 @@
+version: 2
+
+sources:
+  - name: PHISH
+    schema: phish_data
+    tables:
+      - name: ARTISTS
+        identifier: artists
+        description: >
+          Source for Artists related to Phish. No longer produced by dlt's
+          phish_core_pipeline (only shows/setlists/songs/venues are extracted) —
+          this source and stg_phishapi__artists.sql will fail until an artists
+          resource is added back or the model is removed.
+        columns:
+          - name: _AIRBYTE_RAW_ID
+            description: ""
+            data_type: TEXT
+            tests: []
+          - name: ID
+            data_type: TEXT
+            tests:
+              - unique
+              - not_null
+          - name: SLUG
+            data_type: TEXT
+          - name: ARTIST
+            data_type: TEXT
+          - name: _AIRBYTE_META
+            data_type: VARIANT
+          - name: _AIRBYTE_EXTRACTED_AT
+            data_type: TIMESTAMP_TZ
+        config:
+          tags:
+            - source
+          meta:
+            experts:
+              users:
+                - jeff@gmdata.co
+              teams: []
+            tier: tier 3
+            asset_status: verified
+      - name: SHOWS
+        identifier: shows
+        columns:
+          - name: _AIRBYTE_RAW_ID
+            data_type: TEXT
+          - name: ARTISTID
+            data_type: TEXT
+          - name: ARTIST_NAME
+            data_type: TEXT
+          - name: SHOWID
+            data_type: TEXT
+            tests:
+              - unique
+              - not_null
+          - name: SETLIST_NOTES
+            data_type: TEXT
+          - name: CITY
+            data_type: TEXT
+          - name: TOUR_NAME
+            data_type: TEXT
+          - name: SHOWYEAR
+            data_type: TEXT
+          - name: UPDATED_AT
+            data_type: TEXT
+          - name: SHOWDATE
+            data_type: TEXT
+          - name: COUNTRY
+            data_type: TEXT
+          - name: VENUEID
+            data_type: TEXT
+          - name: STATE
+            data_type: TEXT
+          - name: SHOWMONTH
+            data_type: TEXT
+          - name: VENUE
+            data_type: TEXT
+          - name: _AIRBYTE_META
+            data_type: VARIANT
+          - name: TOURID
+            data_type: TEXT
+          - name: PERMALINK
+            data_type: TEXT
+          - name: EXCLUDE_FROM_STATS
+            data_type: TEXT
+          - name: _AIRBYTE_EXTRACTED_AT
+            data_type: TIMESTAMP_TZ
+          - name: SHOWDAY
+            data_type: TEXT
+        description: Show data, no songs / setlist.
+        config:
+          tags:
+            - source
+          meta:
+            experts:
+              users:
+                - jeff@gmdata.co
+              teams: []
+            tier: tier 3
+            asset_status: verified
+      - name: SONGS
+        identifier: songs
+        columns:
+          - name: _AIRBYTE_EXTRACTED_AT
+            data_type: TIMESTAMP_TZ
+          - name: _AIRBYTE_META
+            data_type: VARIANT
+          - name: TIMES_PLAYED
+            data_type: TEXT
+          - name: ABBR
+            data_type: TEXT
+          - name: GAP
+            data_type: TEXT
+          - name: DEBUT
+            data_type: TEXT
+          - name: SLUG
+            data_type: TEXT
+          - name: LAST_PERMALINK
+            data_type: TEXT
+          - name: LAST_PLAYED
+            data_type: TEXT
+          - name: SONG
+            data_type: TEXT
+            tests: []
+          - name: SONGID
+            data_type: TEXT
+            tests: []
+          - name: DEBUT_PERMALINK
+            data_type: TEXT
+          - name: ARTIST
+            data_type: TEXT
+          - name: _AIRBYTE_RAW_ID
+            data_type: TEXT
+        description: Songs data including last played.  This table may not be used very much in our modeling because our goal is to create a real-time song stats table (based on setlists).
+        config:
+          tags:
+            - source
+          meta:
+            experts:
+              users:
+                - jeff@gmdata.co
+              teams: []
+            tier: tier 1
+            asset_status: verified
+      - name: VENUES
+        identifier: venues
+        columns:
+          - name: _AIRBYTE_EXTRACTED_AT
+            data_type: TIMESTAMP_TZ
+          - name: _AIRBYTE_RAW_ID
+            data_type: TEXT
+          - name: VENUENOTES
+            data_type: TEXT
+          - name: ALIAS
+            data_type: TEXT
+          - name: VENUENAME
+            data_type: TEXT
+          - name: SHORT_NAME
+            data_type: TEXT
+          - name: COUNTRY
+            data_type: TEXT
+          - name: _AIRBYTE_META
+            data_type: VARIANT
+          - name: STATE
+            data_type: TEXT
+          - name: CITY
+            data_type: TEXT
+          - name: VENUEID
+            data_type: TEXT
+            tests:
+              - unique
+              - not_null
+        description: "Venue metadata (examples: city, state, country)"
+        config:
+          tags:
+            - source
+          meta:
+            experts:
+              users:
+                - jeff@gmdata.co
+              teams: []
+            tier: tier 3
+            asset_status: verified
+      - name: SETLISTS
+        identifier: setlists
+        columns:
+          - name: SETLISTNOTES
+            data_type: TEXT
+          - name: ISJAMCHART
+            data_type: TEXT
+          - name: ISJAM
+            data_type: TEXT
+          - name: VENUEID
+            data_type: TEXT
+          - name: _AIRBYTE_RAW_ID
+            data_type: TEXT
+          - name: ARTIST_NAME
+            data_type: TEXT
+          - name: TOURID
+            data_type: TEXT
+          - name: SONGID
+            data_type: TEXT
+          - name: CITY
+            data_type: TEXT
+          - name: EXCLUDE
+            data_type: TEXT
+          - name: NICKNAME
+            data_type: TEXT
+          - name: TOURNAME
+            data_type: TEXT
+          - name: ISREPRISE
+            data_type: TEXT
+          - name: REVIEWS
+            data_type: TEXT
+          - name: ARTISTID
+            data_type: TEXT
+          - name: VENUE
+            data_type: TEXT
+          - name: TOURWHEN
+            data_type: TEXT
+          - name: PERMALINK
+            data_type: TEXT
+          - name: COUNTRY
+            data_type: TEXT
+          - name: TRANSITION
+            data_type: TEXT
+          - name: TRACKTIME
+            data_type: TEXT
+          - name: SONG
+            data_type: TEXT
+          - name: SHOWID
+            data_type: TEXT
+          - name: META
+            data_type: TEXT
+          - name: UNIQUEID
+            data_type: TEXT
+            tests:
+              - unique
+              - not_null
+          - name: POSITION
+            data_type: TEXT
+          - name: SOUNDCHECK
+            data_type: TEXT
+          - name: SHOWDATE
+            data_type: TEXT
+          - name: GAP
+            data_type: TEXT
+          - name: IS_ORIGINAL
+            data_type: TEXT
+          - name: _AIRBYTE_META
+            data_type: VARIANT
+          - name: _AIRBYTE_EXTRACTED_AT
+            data_type: TIMESTAMP_TZ
+          - name: FOOTNOTE
+            data_type: TEXT
+          - name: SHOWYEAR
+            data_type: TEXT
+          - name: JAMCHART_DESCRIPTION
+            data_type: TEXT
+          - name: STATE
+            data_type: TEXT
+          - name: SLUG
+            data_type: TEXT
+          - name: ARTIST_SLUG
+            data_type: TEXT
+          - name: SET
+            data_type: TEXT
+          - name: TRANS_MARK
+            data_type: TEXT
+        description: "Setlist data.  Conveniently contains  columns from VENUE, ARTIST, and SONGS.  Using this table will greatly reduce the amount of data modeling required.\n\nIt will be the basis for our real-time song stats table."
+        config:
+          tags:
+            - source
+          meta:
+            experts:
+              users:
+                - jeff@gmdata.co
+              teams: []
+            tier: tier 1
+            asset_status: verified
+    description: Points to AIRBYTE.PHISH schema and shows the tables within it.
+    config:
+      tags:
+        - source
+      meta:
+        experts:
+          users:
+            - jeff@gmdata.co
+        asset_status: verified
+        tier: tier 1
