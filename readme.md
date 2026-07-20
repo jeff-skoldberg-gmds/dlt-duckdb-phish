@@ -17,14 +17,15 @@ separately-scheduled jobs on the dltHub Platform.
 ## Layout
 
 ```
-dlt-pipelines/   extract & load — dlt pipelines, sources, dltHub deployment config
-dbt-pipelines/   transform — dbt project (staging/intermediate/reporting models)
+dlt-pipelines/                 extract & load — dlt pipelines, sources, dltHub deployment config
+dlt-pipelines/dbt-pipelines/   transform — dbt project (staging/intermediate/reporting models);
+                               nested inside the workspace so `dlthub deploy` ships it too
 ```
 
 - **[dlt-pipelines/README.md](dlt-pipelines/README.md)** — running the pipelines,
   running dbt through dlt, deploying to dltHub Platform.
-- **[dbt-pipelines/README.md](dbt-pipelines/README.md)** — what the dbt project
-  contains.
+- **[dlt-pipelines/dbt-pipelines/README.md](dlt-pipelines/dbt-pipelines/README.md)** —
+  what the dbt project contains.
 
 ## Quickstart
 

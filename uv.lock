@@ -394,6 +394,18 @@ wheels = [
 ]
 
 [[package]]
+name = "dbt"
+version = "2.0.0rc194"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/87/83/9c654ad896bcf31f28f3392116ff3516b8662592742dee88031a1f147632/dbt-2.0.0rc194-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:f15d421e01c0c1c9df22a68b51734862f3e593f90c37cea089365a59091165c2", size = 92070660 },
+    { url = "https://files.pythonhosted.org/packages/ee/c8/5f3d353cab3c08622dc885a09d8389919f4cd2ae4b80aa7419ef9d60783a/dbt-2.0.0rc194-py3-none-macosx_11_0_arm64.whl", hash = "sha256:527fe87e291cfe63fb7c5932519157d64de6c4e7035601c6eb752df5886a91f4", size = 83969824 },
+    { url = "https://files.pythonhosted.org/packages/ff/24/ca167be5d495211b14400ed3b83b1b06116b630256e764bbd4404fac09da/dbt-2.0.0rc194-py3-none-manylinux_2_28_aarch64.whl", hash = "sha256:efbf9d7197f3acf56bd8deaf3351a2a497d0df1fc6ebea90f234c9bd10d523f4", size = 87598133 },
+    { url = "https://files.pythonhosted.org/packages/70/bb/6af386e1d7ef0b73c529059844ebe148e8aff6c4dbb659b48f6b0f9d9435/dbt-2.0.0rc194-py3-none-manylinux_2_28_x86_64.whl", hash = "sha256:07557aef192a81503806128d8865cb9f0e3387750ce78285b2882f5143524fe5", size = 94638503 },
+    { url = "https://files.pythonhosted.org/packages/b2/5e/aa5ab3f9aef4029e7a38eed789fa823f16df6ca8018943515ae81f22465a/dbt-2.0.0rc194-py3-none-win_amd64.whl", hash = "sha256:04babf7109624f104bf9c2074df37da027c996e16fd69ab4a76ce3ac1e55c047", size = 101578830 },
+]
+
+[[package]]
 name = "dlt"
 version = "1.29.0"
 source = { registry = "https://pypi.org/simple" }
@@ -459,6 +471,9 @@ dependencies = [
 ]
 
 [package.dev-dependencies]
+dbt = [
+    { name = "dbt" },
+]
 dev = [
     { name = "ruff" },
 ]
@@ -472,6 +487,7 @@ requires-dist = [
 ]
 
 [package.metadata.requires-dev]
+dbt = [{ name = "dbt", specifier = "==2.0.0rc194" }]
 dev = [{ name = "ruff", specifier = ">=0.8.0" }]
 
 [[package]]

@@ -21,3 +21,4 @@ output/
 *.db
 *.log*
 *.ruff_cache/
+logs/

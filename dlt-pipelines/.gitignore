@@ -1,0 +1,35 @@
+# NOTE: dlthub deploy tarballs the workspace using ONLY this file for exclusions
+# (gitignore-style, replaces its built-in defaults; nested .gitignore files are NOT
+# read, and .dlt/ is always excluded separately). Keep deploy-sensitive patterns here.
+
+# python artifacts (deploy selector defaults, kept since this file replaces them)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+dist/
+build/
+*.egg-info/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+*.so
+.DS_Store
+.env
+.vscode/
+
+# local dev duckdb — 31MB, must not ship in the deploy tarball
+data/
+*.duckdb
+*.wal
+
+# dbt generated artifacts
+dbt-pipelines/target/
+dbt-pipelines/logs/
+dbt-pipelines/dbt_packages/
+dbt-pipelines/dbt_internal_packages/
+dbt-pipelines/.user.yml
+# generated profile embeds the motherduck token on prod — never commit or deploy
+profiles.yml

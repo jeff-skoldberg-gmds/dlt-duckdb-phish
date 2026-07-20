@@ -12,6 +12,16 @@ dependencies = [
 ]
 
 [dependency-groups]
+# dbt Fusion CLI for phish_dbt_job.py. Keep the pin in sync with
+# dlt-pipelines/requirements.txt — the dltHub runtime installs from THAT file.
+dbt = [
+    "dbt==2.0.0rc194",
+]
 dev = [
     "ruff>=0.8.0",
 ]
+
+[tool.uv]
+# install dbt on plain `uv sync` so `uv run python dlt-pipelines/phish_dbt_job.py`
+# finds the dbt binary locally
+default-groups = ["dev", "dbt"]

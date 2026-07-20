@@ -1,10 +1,14 @@
 # dbt-pipelines
 
-dbt project (dbt Fusion) that transforms phish.net data loaded by
-[`../dlt-pipelines`](../dlt-pipelines) — see that project's
-[README](../dlt-pipelines/README.md#running-dbt-through-dlt) for how to actually run
-this (profile generation, `dbt build`, dltHub deployment). This file just orients you
-inside the dbt project itself.
+dbt project (dbt Fusion) that transforms phish.net data loaded by the dlt pipelines in
+the [parent workspace](..) — see that project's
+[README](../README.md#running-dbt-through-dlt) for how to actually run this (profile
+generation, `dbt build`, dltHub deployment). This file just orients you inside the dbt
+project itself.
+
+This directory lives **inside** `dlt-pipelines/` on purpose: `dlthub deploy` only
+ships the workspace directory, so nesting here is what lets `phish_dbt_transform` run
+on the dltHub Platform.
 
 ## Models
 
@@ -19,14 +23,15 @@ seeds/phish_eras.csv             static era lookup (used by stg_phishapi__eras)
 Materializations are set in `dbt_project.yml`: staging/intermediate as views,
 reporting as tables.
 
-## Known gaps
+## Formerly known gaps (fixed)
 
-- **`stg_phishapi__artists`** — sourced from `PHISH.ARTISTS`, but dlt's
-  `phish_core_pipeline` doesn't extract an `artists` resource (only
-  shows/setlists/songs/venues). This model and its source tests will fail until
-  either an `artists` resource is added to dlt or this model is removed.
-- **`phish_setlists.sql`** — fails with a VARCHAR/DATE type mismatch in a `COALESCE`;
-  needs an explicit cast. Pre-existing, unrelated to the dlt/dbt wiring.
+- **`stg_phishapi__artists`** — dlt's `phish_core_pipeline` now extracts an `artists`
+  resource, so this model and its source tests pass.
+- **`phish_setlists.sql`** — the VARCHAR/DATE `COALESCE` type mismatch has been fixed;
+  the model builds cleanly.
+
+Full `dbt build` is green (10 models, 12 tests, 1 seed) on both dev (local DuckDB)
+and prod (Motherduck) targets.
 
 ## Origin
 

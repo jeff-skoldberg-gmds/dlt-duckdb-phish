@@ -40,30 +40,36 @@ without asking dlt where it put it).
 
 ## Running dbt through dlt
 
-The dbt project lives in [`../dbt-pipelines`](../dbt-pipelines) and transforms
-whatever's currently in the `phish_data` dataset. It runs via the **dbt Fusion** CLI
-(`dbt`), not dlt's built-in `dlt.helpers.dbt` runner — that runner pip-installs
-classic dbt-core into a venv, which isn't how Fusion works. Instead:
+The dbt project lives in [`dbt-pipelines/`](dbt-pipelines) — **inside** this
+workspace, so `dlthub deploy` ships it to the platform (the runtime only syncs this
+directory; a sibling location could never run there). It transforms whatever's
+currently in the `phish_data` dataset, via the **dbt Fusion** CLI (`dbt`), not dlt's
+built-in `dlt.helpers.dbt` runner — that runner pip-installs classic dbt-core into a
+venv, which isn't how Fusion works. Instead:
 
-- **`dbt_profile.py`** generates `../dbt-pipelines/profiles.yml` from dlt's own
-  destination config — the same duckdb path (`get_duckdb_path()`) locally, or the
-  Motherduck `database`/`password` credentials on `prod`. No hand-maintained profile,
-  no separate credentials to keep in sync.
-- **`phish_dbt_job.py`** regenerates that profile, then shells out to
-  `dbt build --project-dir ../dbt-pipelines --profiles-dir ../dbt-pipelines --target <dev|prod>`.
+- **`dbt_profile.py`** generates a `profiles.yml` from dlt's own destination config —
+  the same duckdb path (`get_duckdb_path()`) locally, or the Motherduck
+  `database`/`password` credentials on `prod`. No hand-maintained profile, no separate
+  credentials to keep in sync. The file is written to a **temp directory** (returned
+  by `build_profile()`), never into the dbt project: on prod it embeds the motherduck
+  token, and generated files inside the workspace could ship in the deploy tarball.
+- **`phish_dbt_job.py`** regenerates that profile, runs `dbt deps` (dbt_packages/ is
+  generated, gitignored, and excluded from deploys), then
+  `dbt build --project-dir dbt-pipelines --profiles-dir <tmp> --target <dev|prod>`.
 
 Run it directly:
 
 ```bash
-uv run python phish_dbt_job.py
+uv run python phish_dbt_job.py                          # dev → local duckdb
+WORKSPACE__PROFILE=prod uv run python phish_dbt_job.py  # prod → Motherduck
 ```
 
 Or drive dbt yourself, e.g. to run/debug a single model:
 
 ```bash
-uv run python dbt_profile.py   # regenerate profiles.yml for the active profile
-dbt debug   --project-dir ../dbt-pipelines --profiles-dir ../dbt-pipelines --target dev
-dbt run     --project-dir ../dbt-pipelines --profiles-dir ../dbt-pipelines --target dev --select stg_phishapi__shows
+uv run python dbt_profile.py   # writes profiles.yml to a temp dir, prints the path
+dbt debug   --project-dir dbt-pipelines --profiles-dir <printed dir> --target dev
+dbt run     --project-dir dbt-pipelines --profiles-dir <printed dir> --target dev --select stg_phishapi__shows
 ```
 
 `phish_dbt_job.py` is decorated `@run.pipeline("phish_dbt_transform",
@@ -71,6 +77,17 @@ trigger=run_core_pipeline.success)` — once deployed, it only fires after
 `phish_core_pipeline` succeeds, no polling. It's registered in `__deployment__.py`
 alongside the extract jobs, so on the platform it shows up as its own job with its own
 logs/run history, separate from extraction.
+
+Two packaging notes for the platform:
+
+- The `dbt` Fusion CLI is pinned in **`requirements.txt`** — the runtime builds every
+  job env from that file. (A pyproject `[dependency-groups]` entry can't work here:
+  the repo-root `pyproject.toml` sits outside the deployed workspace tree. Keep the
+  two pins in sync.)
+- **`.gitignore` in this directory doubles as the deploy exclusion list** — `dlthub
+  deploy` tarballs this workspace using gitignore-style patterns from that one file
+  (nested `.gitignore`s are ignored). Deploy-sensitive patterns (`data/`,
+  `profiles.yml`, dbt artifacts) must live there.
 
 ## Deploying to dltHub Platform
 

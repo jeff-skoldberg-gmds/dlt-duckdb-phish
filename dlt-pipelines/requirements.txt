@@ -1,1 +1,6 @@
 dlt[duckdb,motherduck,parquet,hub]==1.29.0
+# dbt Fusion CLI for phish_dbt_job.py — pinned to the locally-tested preview build.
+# Lives here (not a pyproject dependency group) because the runtime builds job envs
+# from THIS file: the workspace has no pyproject.toml, and the repo-root one is
+# outside the deployed tree, so dependency groups are invisible to it.
+dbt==2.0.0rc194
