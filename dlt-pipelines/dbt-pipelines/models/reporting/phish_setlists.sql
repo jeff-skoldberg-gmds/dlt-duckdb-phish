@@ -21,8 +21,8 @@ setlist_songs as (
         sound_check_songs,
         is_original,
         1 as times_played,
-        _set = 1 and position = 1 as is_show_opener,
-        _set = 2 and position = MIN(position) over (partition by show_id, _set) as is_second_set_opener,
+        _set = '1' and position = 1 as is_show_opener,
+        _set = '2' and position = MIN(position) over (partition by show_id, _set) as is_second_set_opener,
         _set = 'e' and position = MIN(position) over (partition by show_id, _set) as is_encore_opener,
         _set = 'e' as is_encore
     from setlists

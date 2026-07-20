@@ -1,7 +1,0 @@
-version: 2
-orchestrations:
-  - name: build_dashboard
-    config:
-      enabled: false
-      command: y42 build -s +exposure:phish_history_dashboard
-      cron: 0 0/12 1/1 * *

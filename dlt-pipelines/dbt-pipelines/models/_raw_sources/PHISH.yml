@@ -7,10 +7,8 @@ sources:
       - name: ARTISTS
         identifier: artists
         description: >
-          Source for Artists related to Phish. No longer produced by dlt's
-          phish_core_pipeline (only shows/setlists/songs/venues are extracted) —
-          this source and stg_phishapi__artists.sql will fail until an artists
-          resource is added back or the model is removed.
+          Source for Artists related to Phish. Extracted by dlt's
+          phish_core_pipeline from the phish.net v5 artists.json endpoint.
         columns:
           - name: _AIRBYTE_RAW_ID
             description: ""

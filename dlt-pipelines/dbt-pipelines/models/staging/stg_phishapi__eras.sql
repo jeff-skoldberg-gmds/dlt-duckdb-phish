@@ -5,10 +5,10 @@ SELECT
 UNION
 SELECT
     '2.0',
-    '2002-12-31',
-    '2004-12-31'
+    '2002-12-31'::date,
+    '2004-12-31'::date
 UNION
 SELECT
     '3.0',
-    '2009-01-01',
-    NULL
+    '2009-01-01'::date,
+    NULL::date
