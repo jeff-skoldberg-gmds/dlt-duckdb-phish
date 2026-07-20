@@ -8,6 +8,7 @@ dependencies = [
     "dlt[duckdb,motherduck,parquet,hub]==1.29.0",
     "duckdb>=1.5.4",
     "fastmcp>=3.4.4",
+    "pyyaml>=6.0",
 ]
 
 [dependency-groups]
