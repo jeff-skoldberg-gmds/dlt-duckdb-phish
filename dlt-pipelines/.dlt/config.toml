@@ -1,7 +1,7 @@
 # put your configuration values here
 
 [runtime]
-log_level = "WARNING"  # the system log level of dlt
+log_level = "INFO"  # the system log level of dlt — was WARNING, too quiet on the platform
 dlthub_telemetry = false
 workspace_id = "5d7ec811-f36a-435e-bb60-a42709e77348"
 organization_id = "f5ea4d2b-d85e-418f-b4c1-c427ad6af81e"
