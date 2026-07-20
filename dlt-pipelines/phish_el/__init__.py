@@ -1,5 +1,5 @@
 """
-shows, setlists, songs, venues are called with full load in parallel (phish_core_source).
+shows, setlists, songs, venues, artists are called with full load in parallel (phish_core_source).
 users and user_attendance are a separate source (phish_user_source) so that user_attendance
 can be parallelized based on the full users response, and so the two can be deployed,
 scheduled, and rate-limited independently — see docs/user-attendance-incremental-options.md.
@@ -56,6 +56,9 @@ def phish_core_source(dev_limit: int = None):
         "client": {"base_url": base_url},
         "resources": resources,
         "resource_defaults": {
+            # every endpoint returns a full snapshot, so each run replaces the
+            # table — the default "append" duplicates rows across runs
+            "write_disposition": "replace",
             "endpoint": {
                 "params": {
                     "apikey": _get_api_key(),

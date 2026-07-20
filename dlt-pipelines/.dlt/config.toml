@@ -28,6 +28,7 @@ resources = [
     { name = "setlists", endpoint = "setlists.json" },
     { name = "songs", endpoint = "songs.json" },
     { name = "venues", endpoint = "venues.json" },
+    { name = "artists", endpoint = "artists.json" },
 ]
 
 [sources.phish_pipeline.resource_defaults.endpoint.params]
