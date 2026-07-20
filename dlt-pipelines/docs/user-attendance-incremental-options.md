@@ -61,8 +61,18 @@ so consumers know the numbers are a lower bound.
 
 ## Status
 
-Not yet implemented. The `users`/`user_attendance` resources are currently
-gated off entirely via `sources.phish_pipeline.enable_user_attendance` in
-`config.toml` (see [phish_pipeline.py](../phish_pipeline.py) /
-[phish_el/__init__.py](../phish_el/__init__.py)) until this is designed
-properly.
+Option A implemented. `users` is pulled with `dlt.sources.incremental("uid")`
+and merged on `uid`; `user_attendance` merges on `(uid, showid)`, so re-pulls
+are idempotent. By default a run only fetches attendance for newly-created
+users. Pass `--full-sweep-attendance` (or `full_sweep_attendance=True` to
+`phish_user_source`) to re-pull attendance for all users instead — run
+this on a slower cadence (e.g. weekly) as the backfill safety net. See
+[phish_user_pipeline.py](../phish_user_pipeline.py) / [phish_el/__init__.py](../phish_el/__init__.py).
+
+Option B's `last_synced_at` / `last_full_synced_at` watermarks are not
+implemented — not yet needed unless downstream consumers require an explicit
+staleness signal.
+
+The resources are still gated off by default via
+`sources.phish_pipeline.enable_user_attendance` in `config.toml`; flip it to
+`true` to turn them on.

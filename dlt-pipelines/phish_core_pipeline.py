@@ -1,32 +1,25 @@
 import argparse
 import logging
 import dlt
+from dlt.hub import run
 from time import time
-from phish_el import phish_dot_net_source
+from phish_el import phish_core_source
+from pipeline_common import get_destination
 
 logger = logging.getLogger("dlt")
 
 
-def get_destination(local_duckdb_name="duck.db"):
-    # destination.name comes from dev.config.toml / prod.config.toml depending on
-    # the active profile (WORKSPACE__PROFILE or `dlthub local profile use`).
-    destination_name = dlt.config.get("destination.name", str) or "duckdb"
-    if destination_name == "duckdb":
-        return dlt.destinations.duckdb(local_duckdb_name)
-    return destination_name  # e.g. "motherduck" — credentials resolved from secrets
-
-
+@run.pipeline("phish_core_pipeline")
 def run_dlt_pipeline(local_duckdb_name="duck.db", target_schema_name="phish", limit=None):
-    logger.info("Starting DLT pipeline")
+    logger.info("Starting DLT core pipeline")
     pipeline = dlt.pipeline(
-        pipeline_name="phish_pipeline",
+        pipeline_name="phish_core_pipeline",
         destination=get_destination(local_duckdb_name),
         dataset_name="phish_data",
     )
 
-    # Run the pipeline
     load_info = pipeline.run(
-        phish_dot_net_source(dev_limit=limit), loader_file_format="parquet"
+        phish_core_source(dev_limit=limit), loader_file_format="parquet"
     )
     logger.info("\nPipeline load info:")
     logger.info(load_info)
