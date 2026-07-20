@@ -11,7 +11,7 @@ logger = logging.getLogger("dlt")
 
 @run.pipeline("phish_user_pipeline")
 def run_dlt_pipeline(
-    local_duckdb_name="duck.db",
+    local_duckdb_name="phish.duckdb",
     target_schema_name="phish",
     limit=None,
     full_sweep_attendance=None,
@@ -34,7 +34,7 @@ def run_dlt_pipeline(
 
 
 def main(
-    local_duckdb_name="duck.db",
+    local_duckdb_name="phish.duckdb",
     target_schema_name="phish",
     limit=None,
     full_sweep_attendance=False,
@@ -72,7 +72,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     main(
-        local_duckdb_name="duck.db",
+        local_duckdb_name="phish.duckdb",
         target_schema_name="phish",
         limit=args.limit,
         full_sweep_attendance=args.full_sweep_attendance,

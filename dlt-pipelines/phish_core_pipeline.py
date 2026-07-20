@@ -10,7 +10,7 @@ logger = logging.getLogger("dlt")
 
 
 @run.pipeline("phish_core_pipeline")
-def run_dlt_pipeline(local_duckdb_name="duck.db", target_schema_name="phish", limit=None):
+def run_dlt_pipeline(local_duckdb_name="phish.duckdb", target_schema_name="phish", limit=None):
     logger.info("Starting DLT core pipeline")
     pipeline = dlt.pipeline(
         pipeline_name="phish_core_pipeline",
@@ -25,7 +25,7 @@ def run_dlt_pipeline(local_duckdb_name="duck.db", target_schema_name="phish", li
     logger.info(load_info)
 
 
-def main(local_duckdb_name="duck.db", target_schema_name="phish", limit=None):
+def main(local_duckdb_name="phish.duckdb", target_schema_name="phish", limit=None):
     pipeline_started_at = time()
     logger.info("Main function started at %s", pipeline_started_at)
     run_dlt_pipeline(
@@ -49,7 +49,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     main(
-        local_duckdb_name="duck.db",
+        local_duckdb_name="phish.duckdb",
         target_schema_name="phish",
         limit=args.limit,
     )
