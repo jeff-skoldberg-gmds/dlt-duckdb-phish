@@ -439,6 +439,10 @@ hub = [
     { name = "dlthub" },
     { name = "dlthub-client" },
 ]
+motherduck = [
+    { name = "duckdb" },
+    { name = "pyarrow" },
+]
 parquet = [
     { name = "pyarrow" },
 ]
@@ -448,7 +452,7 @@ name = "dlt-duckdb-phish"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
-    { name = "dlt", extra = ["duckdb", "hub", "parquet"] },
+    { name = "dlt", extra = ["duckdb", "hub", "motherduck", "parquet"] },
     { name = "duckdb" },
     { name = "fastmcp" },
 ]
@@ -460,7 +464,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "dlt", extras = ["duckdb", "parquet", "hub"], specifier = ">=1.29.0" },
+    { name = "dlt", extras = ["duckdb", "motherduck", "parquet", "hub"], specifier = "==1.29.0" },
     { name = "duckdb", specifier = ">=1.5.4" },
     { name = "fastmcp", specifier = ">=3.4.4" },
 ]

@@ -5,7 +5,7 @@ description = "This project gets data from the Phish.net API, loads it to DuckDB
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "dlt[duckdb,parquet,hub]>=1.29.0",
+    "dlt[duckdb,motherduck,parquet,hub]==1.29.0",
     "duckdb>=1.5.4",
     "fastmcp>=3.4.4",
 ]
