@@ -3,6 +3,19 @@
 [runtime]
 log_level = "WARNING"  # the system log level of dlt
 dlthub_telemetry = false
+workspace_id = "5d7ec811-f36a-435e-bb60-a42709e77348"
+organization_id = "f5ea4d2b-d85e-418f-b4c1-c427ad6af81e"
+# api.phish.net rate-limits attendance/uid/{uid}.json; --full-sweep-attendance fires one
+# request per user concurrently and was exhausting the default 5 retries under 429s
+request_max_attempts = 10
+request_backoff_factor = 2
+
+[normalize.parquet_normalizer]
+# emit _dlt_load_id for arrow/parquet data
+add_dlt_load_id = true
+
+[workspace.settings]
+name = "concerts"
 
 [sources.phish_pipeline]
 base_url = "https://api.phish.net/v5/"
@@ -28,6 +41,9 @@ file_max_items = 100000
 
 [extract]
 workers = 6
+# caps concurrent in-flight @dlt.defer futures (user_attendance fetches), independent of
+# `workers` thread count — keeps the phish.net rate limit from being slammed on full sweeps
+max_parallel_items = 5
 
 [normalize]
 workers = 4

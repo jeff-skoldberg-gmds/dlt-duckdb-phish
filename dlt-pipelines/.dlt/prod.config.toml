@@ -2,5 +2,9 @@
 [destination]
 name = "motherduck"
 
-[destination.motherduck]
+[destination.motherduck.credentials]
 database = "ph_land_test"
+
+[sources.phish_pipeline]
+enable_user_attendance = true
+full_sweep_attendance = true

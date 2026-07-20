@@ -1,13 +1,10 @@
 {
   "mcpServers": {
     "dlt-workspace-mcp": {
-      "command": "uv",
+      "command": "sh",
       "args": [
-        "run",
-        "dlthub",
-        "ai",
-        "mcp",
-        "--stdio"
+        "-c",
+        "cd dlt-pipelines && exec uv run --project .. dlthub ai mcp --stdio"
       ]
     }
   }
