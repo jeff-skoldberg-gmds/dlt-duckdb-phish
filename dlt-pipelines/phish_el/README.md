@@ -22,7 +22,11 @@ uv run python phish_core_pipeline.py --limit 5           # dev: cap every resour
 
 uv run python phish_user_pipeline.py                     # daily mode: only new users
 uv run python phish_user_pipeline.py --limit 5            # dev: cap to 5 users
-uv run python phish_user_pipeline.py --full-sweep-attendance   # re-pull ALL users' attendance
+uv run python phish_user_pipeline.py --full-sweep-attendance   # re-pull ALL users' attendance,
+                                                               # in resumable chunks
+uv run python phish_user_pipeline.py --full-sweep-attendance \
+    --chunk-size 500 --time-budget-minutes 0                  # sweep to completion locally
+uv run python phish_user_pipeline.py --status                  # sweep progress, no data run
 ```
 
 Requires `dlt-pipelines/.dlt/secrets.toml` with:
@@ -63,6 +67,16 @@ rationale before turning it on.
     re-running it never duplicates rows. Run this on a slower cadence (e.g. weekly) as
     the backfill safety net; staleness for backfills is bounded to "at most one sweep
     interval."
+  - The sweep runs in **resumable chunks**: one `pipeline.run()` per `--chunk-size`
+    users (default 500 — sized so a chunk still finishes inside the time budget even when
+    the API is heavily rate-limiting), each committing a watermark to dlt state alongside its data.
+    A killed run (Ctrl+C, crash, the platform's 2h job limit) resumes from the last
+    completed chunk on the next invocation; `--time-budget-minutes` (default 100)
+    stops a run cleanly before the platform kill so the next scheduled run continues
+    the same sweep. Each chunk also appends a row to the `sweep_log` table, and
+    `--status` prints the current watermark. When a sweep completes, the next
+    full-sweep invocation starts a fresh one. See the "Chunked sweep" section of
+    `../docs/user-attendance-incremental-options.md`.
 
 Full design writeup: `../docs/user-attendance-incremental-options.md`.
 
@@ -131,6 +145,15 @@ no CLI args, so the flag has to come from config. To trigger a one-off full swee
 3. **Revert step 1 back to `false`/remove it and redeploy** once done, so the regular
    schedule goes back to cheap incremental-only daily runs instead of sweeping on
    every trigger.
+
+A sweep bigger than one 2-hour job is fine: each run stops cleanly at its
+`time_budget_minutes` (default 100) and the next run of the same job resumes the
+sweep from the committed watermark — just trigger/schedule the job repeatedly until
+the logs report "Sweep complete" (or check the `sweep_log` table / `--status`
+locally). The driver knobs (`chunk_size`, `time_budget_minutes`, `max_chunks`) are
+job config on the platform — settable under
+`[jobs.phish_user_pipeline.run_dlt_pipeline]` in `prod.config.toml`, no code change
+needed.
 
 ### Debugging a deployed run
 
